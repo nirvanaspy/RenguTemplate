@@ -312,11 +312,11 @@
             <!-- Sidebar -->
             <ul class="nav navbar-nav side-nav" id="sidebar">
 
-                <li class="collapsed-content">
+                <!--<li class="collapsed-content">
                     <ul>
-                        <li class="search"><!-- Collapsed search pasting here at 768px --></li>
+                        <li class="search">&lt;!&ndash; Collapsed search pasting here at 768px &ndash;&gt;</li>
                     </ul>
-                </li>
+                </li>-->
 
                 <li class="navigation" id="navigation">
                     <a href="#" class="sidebar-toggle" data-toggle="#navigation">Navigation <i class="fa fa-angle-up"></i></a>
@@ -326,13 +326,33 @@
                         <li class="active">
                             <a href="index.html">
                                 <i class="fa fa-tachometer"></i> Dashboard
-                                <span class="badge badge-red">1</span>
+                                <!--<span class="badge badge-red">1</span>-->
                             </a>
                         </li>
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-list"></i> Forms <b class="fa fa-plus dropdown-plus"></b>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>用户管理</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-product-hunt"></i> 项目管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-tasks"></i> 任务管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-group"></i> 项目组管理
+                            </a>
+                        </li>
+                        <!--<li class="dropdown">
+                            &lt;!&ndash;<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-list"></i>用户管理<b class="fa fa-plus dropdown-plus"></b>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -350,7 +370,7 @@
                                         <i class="fa fa-caret-right"></i> Form Wizard
                                     </a>
                                 </li>
-                            </ul>
+                            </ul>&ndash;&gt;
                         </li>
 
                         <li class="dropdown">
@@ -381,6 +401,7 @@
                                 <i class="fa fa-tint"></i> Buttons & Icons
                             </a>
                         </li>
+
                         <li>
                             <a href="grid.html">
                                 <i class="fa fa-th"></i> Grid Layout
@@ -481,8 +502,7 @@
                             <a href="charts.html">
                                 <i class="fa fa-bar-chart-o"></i> Charts & Graphs
                             </a>
-                        </li>
-
+                        </li>-->
 
                     </ul>
 
@@ -543,8 +563,6 @@
                     </div>
 
                 </li>-->
-
-
             </ul>
             <!-- Sidebar end -->
 

@@ -54,15 +54,15 @@
                                 <div class="input-group-addon"><i class="fa fa-key"></i></div>
                             </div>
                             <div class="input-group">
-                                <input type="password" class="form-control" name="phoneNumber" v-model="loginForm.phoneNumber" placeholder="请输入手机号码">
+                                <input type="text" class="form-control" name="phoneNumber" v-model="loginForm.phoneNumber" placeholder="请输入手机号码">
                                 <div class="input-group-addon"><i class="fa fa-phone"></i></div>
                             </div>
                             <div class="input-group">
-                                <input type="password" class="form-control" name="name" v-model="loginForm.name" placeholder="请输入姓名">
+                                <input type="text" class="form-control" name="name" v-model="loginForm.name" placeholder="请输入姓名">
                                 <div class="input-group-addon"><i class="fa fa-address-book"></i></div>
                             </div>
                             <div class="input-group">
-                                <input type="password" class="form-control" name="mail" v-model="loginForm.mail" placeholder="请输入邮箱">
+                                <input type="text" class="form-control" name="mail" v-model="loginForm.mail" placeholder="请输入邮箱">
                                 <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
                             </div>
                         </section>
