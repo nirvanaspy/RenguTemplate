@@ -36,17 +36,17 @@
 
         <div class="inside-block">
           <img src="../../assets/images/logo-big.png" alt class="logo">
-          <h1><strong>Welcome</strong> Stranger</h1>
-          <h5>Minimal Admin Theme</h5>
+          <h1><strong>仁谷任务管理系统</strong></h1>
+          <h5>登录</h5>
 
           <form id="form-signin" class="form-signin">
             <section>
               <div class="input-group">
-                <input type="text" class="form-control" name="username" v-model="loginForm.username" placeholder="Username">
+                <input type="text" class="form-control" name="username" v-model="loginForm.username" placeholder="请输入用户名">
                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
               </div>
               <div class="input-group">
-                <input type="password" class="form-control" name="password" v-model="loginForm.password" placeholder="Password">
+                <input type="password" class="form-control" name="password" v-model="loginForm.password" placeholder="请输入密码">
                 <div class="input-group-addon"><i class="fa fa-key"></i></div>
               </div>
             </section>
@@ -58,9 +58,9 @@
               <a href="#">Forget password?</a>
             </section>
             <section class="log-in">
-              <span class="btn btn-greensea" @click="handleLogin">Log In</span>
-              <span>or</span>
-              <span class="btn btn-slategray" @click="jumpToRegister">Create an account</span>
+              <span class="btn btn-greensea" @click="handleLogin">登录</span>
+              <span>或</span>
+              <span class="btn btn-slategray" @click="jumpToRegister">前往注册</span>
             </section>
           </form>
         </div>
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+  /*eslint-disable*/
 import { isvalidUsername } from '@/utils/validate'
 
 export default {
@@ -94,8 +95,10 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: 'admin'
+        username: '',
+        password: '',
+        ipConfig: '192.168.31.13',
+        port: 8080
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -131,8 +134,19 @@ export default {
           return false
         }
       })*/
+      let username = this.loginForm.username
+      let password = this.loginForm.password
+      let qs = require('qs');
+      let formData = qs.stringify({
+        'username': username,
+        'password': password,
+        'grant_type': 'password',
+        'scope': 'SCOPES',
+        'client_id': 'OAUTH_CLIENT_ID',
+        'enctype': 'OAUTH_CLIENT_ID'
+      })
       this.loading = true
-      this.$store.dispatch('Login', this.loginForm).then(() => {
+      this.$store.dispatch('Login', formData).then(() => {
         this.loading = false
         this.$router.push({ path: '/' })
       }).catch(() => {
