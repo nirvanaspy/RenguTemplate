@@ -310,7 +310,7 @@
             </ul>
             &lt;!&ndash; /Quick Actions &ndash;&gt;-->
             <!-- Sidebar -->
-            <ul class="nav navbar-nav side-nav" id="sidebar">
+            <ul class="nav navbar-nav side-nav" id="sidebar" style="overflow-y: unset">
 
                 <!--<li class="collapsed-content">
                     <ul>
@@ -320,7 +320,6 @@
 
                 <li class="navigation" id="navigation">
                     <a href="#" class="sidebar-toggle" data-toggle="#navigation">Navigation <i class="fa fa-angle-up"></i></a>
-
                     <ul class="menu">
 
                         <li class="active">
@@ -577,7 +576,22 @@
 
 <script>
   export default {
-    name: 'myIndex'
+    name: 'myIndex',
+    computed: {
+      listenSidebar() {
+        return this.$store.getters.sidebar.opened
+      }
+    },
+    watch: {
+      listenSidebar(a, b) {
+        if (this.$store.getters.sidebar.opened) {
+          $('#sidebar').removeClass('collapsed')
+        } else {
+          $('#sidebar').addClass('collapsed')
+        }
+        // $('#sidebar').toggleClass('collapsed')
+      }
+    }
   }
 </script>
 
