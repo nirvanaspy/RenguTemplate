@@ -10,3 +10,27 @@ export function UserList(listQuery) {
         }
     })
 }
+
+export function createUser(data) {
+    return request({
+        url: '/users',
+        method: 'post',
+        data
+    })
+}
+
+export function updateUser(data, id) {
+    return request({
+        url: '/users/' + id,
+        method: 'patch',
+        data
+    })
+}
+
+export function deleteUser(id) {
+    return request({
+        url: '/users/' + id,
+        method: 'delete'
+    })
+}
+

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="app-container">
         <div id="wrap">
 
 
@@ -53,7 +53,7 @@
                                     <div class="filter-container" style="padding: 0 5px;">
                                         <el-input @keyup.enter.native="handleFilter" style="width:200px; color: rgba(255, 255, 255, 0.6) !important;border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;" class="filter-item" placeholder="姓名" v-model="searchQuery">
                                         </el-input>
-                                        <el-button class="filter-item" size="small" style="float:right;" type="success" icon="el-icon-plus">新增</el-button>
+                                        <el-button class="filter-item" size="small" style="float:right;" type="success" icon="el-icon-plus" @click="handleCreate">新增</el-button>
                                     </div>
 
                                     <!--<div id="inlineEditDataTable_wrapper" class="dataTables_wrapper form-inline" role="grid">
@@ -165,8 +165,8 @@
                                         </el-table-column>
                                         <el-table-column label="操作" width="140" class-name="small-padding fixed-width" align="center">
                                             <template slot-scope="scope">
-                                                <el-button type="primary" size="mini" icon="el-icon-edit" circle> </el-button>
-                                                <el-button type="danger" size="mini" icon="el-icon-delete" circle> </el-button>
+                                                <el-button type="primary" size="mini" icon="el-icon-edit" circle @click="handleUpdate(scope.row)"> </el-button>
+                                                <el-button type="danger" size="mini" icon="el-icon-delete" circle @click="handleDelete(scope.row)"> </el-button>
                                                 <!--<el-dropdown trigger="click">
                                                     <span class="el-dropdown-link">
                                                       <el-button type="success" plain>更多操作</el-button>
@@ -197,6 +197,28 @@
                                     >
                                     </el-pagination>
 
+                                    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="40%">
+                                        <el-form ref="dataForm" :model="temp" label-width="100px" style='width: 80%; margin:0 auto;'>
+                                            <el-form-item label="用户名" prop="name">
+                                                <el-input v-model="temp.username"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="姓名" prop="description">
+                                                <el-input v-model="temp.name"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="联系方式" prop="name">
+                                                <el-input v-model="temp.telephoneNumber"></el-input>
+                                            </el-form-item>
+                                            <el-form-item label="邮箱" prop="description">
+                                                <el-input v-model="temp.emailAddress"></el-input>
+                                            </el-form-item>
+                                        </el-form>
+                                        <div slot="footer" class="dialog-footer">
+                                            <el-button @click="dialogFormVisible = false">取消</el-button>
+                                            <el-button v-if="dialogStatus==='create'" type="primary" @click="createData" :loading="creDepLoading">确定</el-button>
+                                            <el-button v-else type="primary" :loading="upDepLoading" @click="updateData">确定</el-button>
+                                        </div>
+                                    </el-dialog>
+
                                 </section>
                                 <!-- /tile -->
 
@@ -223,7 +245,7 @@
 </template>
 
 <script>
-    import { UserList } from '@/api/user'
+    import { UserList, createUser, updateUser, deleteUser } from '@/api/user'
     /*eslint-disable*/
     export default {
         name: 'login',
@@ -241,7 +263,22 @@
                 total: null,
                 pagesize:10,//每页的数据条数
                 currentPage:1,//默认开始页面
-                searchQuery: ''
+                searchQuery: '',
+                temp: {
+                    id: '',
+                    name: '',
+                    username: '',
+                    telephoneNumber: '',
+                    emailAddress: ''
+                },
+                dialogStatus: '',
+                textMap: {
+                    update: '编辑',
+                    create: '新建'
+                },
+                dialogFormVisible: false,
+                creDepLoading: false,
+                upDepLoading: false
             }
         },
         created() {
@@ -308,6 +345,145 @@
                 this.listQuery.page = val - 1
                 this.currentPage = val
                 this.getList()
+            },
+            resetTemp() {
+                this.temp = {
+                    name: '',
+                    username: '',
+                    telephoneNumber: '',
+                    emailAddress: ''
+                }
+            },
+            handleCreate() {
+                this.resetTemp()
+                this.dialogStatus = 'create'
+                this.dialogFormVisible = true
+                this.$nextTick(() => {
+                    this.$refs['dataForm'].clearValidate()
+                })
+            },
+            createData() {
+                this.$refs['dataForm'].validate((valid) => {
+                    if (valid) {
+                        this.creDepLoading = true
+                        let formData = new FormData();
+
+                        formData.append('username', this.temp.username);
+                        formData.append('password', '123456');
+                        formData.append('name', this.temp.name);
+                        formData.append('telephoneNumber', this.temp.telephoneNumber);
+                        formData.append('emailAddress', this.temp.emailAddress);
+
+                        createUser(formData).then(() => {
+                            this.list.unshift(this.temp)
+                            this.creDepLoading = false
+                            this.dialogFormVisible = false
+                            this.$notify({
+                                title: '成功',
+                                message: '添加成功',
+                                type: 'success',
+                                duration: 2000
+                            })
+                            this.getList()
+                        }).catch((error) => {
+                            this.errorMessage = '操作失败！'
+                            this.creDepLoading = false
+                            if(error.response.data.message){
+                                this.errorMessage = error.response.data.message
+                            }
+                            this.$notify({
+                                title: '添加失败',
+                                message: this.errorMessage,
+                                type: 'error',
+                                duration: 2000
+                            })
+                        })
+                    }
+                })
+            },
+
+            handleUpdate(row) {
+                this.selectedId = row.id;
+
+                this.temp = Object.assign({}, row) // copy obj
+                this.temp.timestamp = new Date(this.temp.timestamp)
+                this.dialogStatus = 'update'
+                this.dialogFormVisible = true
+                this.$nextTick(() => {
+                    this.$refs['dataForm'].clearValidate()
+                })
+            },
+            updateData() {
+                let qs = require('qs');
+                this.$refs['dataForm'].validate((valid) => {
+                    this.upDepLoading = true
+                    if (valid) {
+                        let data = {
+                            'username': this.temp.username,
+                            'name': this.temp.name,
+                            'telephoneNumber': this.temp.telephoneNumber,
+                            'emailAddress': this.temp.emailAddress
+                        };
+
+                        const id = this.selectedId;
+
+                        let userData = qs.stringify(data);
+                        updateUser(userData, id).then(() => {
+                            this.upDepLoading = false
+                            this.dialogFormVisible = false
+                            this.$notify({
+                                title: '成功',
+                                message: '修改成功',
+                                type: 'success',
+                                duration: 2000
+                            })
+                            this.getList()
+                        }).catch((error) =>{
+                            this.upDepLoading = false
+                            this.errorMessage = '修改失败！'
+                            if(error.response.data.message){
+                                this.errorMessage = error.response.data.message
+                            }
+                            this.$notify({
+                                title: '修改失败',
+                                message: this.errorMessage,
+                                type: 'error',
+                                duration: 2000
+                            })
+                        })
+
+                    }
+                })
+            },
+            handleDelete(row) {
+                let id = row.id;
+                this.$confirm('确认删除吗？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    deleteUser(id).then(() => {
+                        this.$notify({
+                            title: '成功',
+                            message: '删除成功',
+                            type: 'success',
+                            duration: 2000
+                        })
+                        this.getList()
+                    }).catch(() => {
+                        this.$notify({
+                            title: '失败',
+                            message: '删除失败！',
+                            type: 'error',
+                            duration: 2000
+                        })
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    })
+                })
             },
             restoreRow(oTable02, nRow) {
                 let aData = oTable02.fnGetData(nRow);
