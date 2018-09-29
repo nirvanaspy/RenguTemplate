@@ -73,7 +73,6 @@ const user = {
         const decodeToken = jwt.decode(data)
         // const decodeRefreshToken = jwt.decode(refreshToken)
         // const dateNow = (new Date())/1000
-        console.log(decodeToken, '22233')
         // console.log(dateNow)
         // const rolesset = data.username === 'admin' ? 'admin' : 'editor'
         const rolesset = decodeToken.authorities.length > 1 ? 'admin' : 'editor'
