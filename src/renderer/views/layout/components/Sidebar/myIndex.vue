@@ -330,10 +330,10 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <router-link to="/userManage/index">
                                 <i class="fa fa-user"></i>
                                 <span>用户管理</span>
-                            </a>
+                            </router-link>
                         </li>
                         <li>
                             <a href="#">
