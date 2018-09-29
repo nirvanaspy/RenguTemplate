@@ -9,6 +9,7 @@
 </template>
 
 <script>
+  /*eslint-disable*/
 // import { Navbar, Sidebar, AppMain } from './components'
 import { AppMain } from './components'
 import Navbar from './components/myNavbar'
@@ -36,6 +37,23 @@ export default {
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
       }
+    },
+    listenSidebar() {
+      return this.$store.getters.sidebar.opened
+    }
+  },
+  watch: {
+    listenSidebar(a, b) {
+      if (this.$store.getters.sidebar.opened) {
+        // $("#content").animate({left: "0px", paddingLeft: "0", marginLeft: '250px'}, 150)
+        $(".main-container").removeClass('collapsed')
+        $(".main-container").animate({left: "0px", paddingLeft: "0", marginLeft: '250px'}, 150)
+      } else {
+        // $("#content").animate({left: "0px", paddingLeft: "0", marginLeft: '10px'}, 150)
+        $(".main-container").addClass('collapsed')
+        $(".main-container").animate({left: "0px", paddingLeft: "0", marginLeft: '10px'}, 150)
+      }
+      // $('#sidebar').toggleClass('collapsed')
     }
   }
 }

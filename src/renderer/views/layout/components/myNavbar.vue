@@ -15,7 +15,12 @@
       <!-- Search end -->
 
       <!-- Quick Actions -->
-      <span style="height:40px;display: inline-block;line-height: 40px;float:left;color:#fff;padding-left: 20px"><strong>Rengu</strong>System</span>
+      <span style="width:218px;height:40px;display: inline-block;line-height: 40px;float:left;color:#fff;padding-left: 20px"><strong>Rengu</strong>System</span>
+      <div class="sidebar-collapse" style="float: left;height: 40px;line-height: 40px;color:#fff;" @click="toggleSideBar">
+        <a href="#">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
       <ul class="nav navbar-nav quick-actions">
 
         <!--<li class="dropdown divided">
@@ -323,6 +328,7 @@
     methods: {
       toggleSideBar() {
         this.$store.dispatch('ToggleSideBar')
+        // console.log(this.$store.getters.sidebar.opened)
       },
       logout() {
         this.$store.dispatch('LogOut').then(() => {
