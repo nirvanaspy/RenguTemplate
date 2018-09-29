@@ -345,9 +345,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <router-link to="/projectGroup/index">
                                 <i class="fa fa-group"></i> 项目组管理
-                            </a>
+                            </router-link>
                         </li>
                         <!--<li class="dropdown">
                             &lt;!&ndash;<a href="#" class="dropdown-toggle" data-toggle="dropdown">

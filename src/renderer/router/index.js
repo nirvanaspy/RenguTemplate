@@ -72,7 +72,18 @@ export const constantRouterMap = [
       }
     ]
   },
-
+  {
+    path: '/projectGroup',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '项目组管理',
+        component: () => import('@/views/projectGroup/index'),
+        meta: { title: '项目组管理', icon: 'form' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

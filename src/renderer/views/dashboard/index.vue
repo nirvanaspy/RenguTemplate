@@ -1087,7 +1087,7 @@
                 'roles'
             ])
         },
-        watch: {
+        /*watch: {
             listenSidebar(a, b) {
                 if (this.$store.getters.sidebar.opened) {
                     // $("#content").animate({left: "0px", paddingLeft: "0", marginLeft: '250px'}, 150)
@@ -1100,7 +1100,7 @@
                 }
                 // $('#sidebar').toggleClass('collapsed')
             }
-        }
+        }*/
     }
 </script>
 

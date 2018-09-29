@@ -62,3 +62,22 @@ a:hover {
 .navbar {
   padding: 0.5rem 0;
 }
+
+// 自定义element表格样式
+div.el-table{
+  background-color: rgba(0,0,0,0);
+}
+.el-table__header th, .el-table__header tr {
+
+  background-color: rgba(0,0,0,0);
+
+  color: #fff;
+
+}
+tr.el-table__row{
+  background-color: rgba(0,0,0,0);
+  color: #fff;
+}
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: rgba(0,0,0,0.3) !important;
+}
