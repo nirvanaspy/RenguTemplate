@@ -14,7 +14,7 @@
                     <div class="pageheader">
 
 
-                        <h2><i class="fa fa-lightbulb-o" style="line-height: 48px;padding-left: 0;"></i> 用户管理
+                        <h2><i class="fa fa-user" style="line-height: 48px;padding-left: 0;"></i> 用户管理
                         </h2>
 
 
@@ -37,7 +37,7 @@
                             <!-- col 12 -->
                             <div class="col-md-12">
                                 <!-- tile -->
-                                <section class="tile transparent">
+                                <section  class="tile color transparent-black">
 
 
                                     <!-- tile header -->
@@ -50,10 +50,10 @@
                                     </div>
                                     <!-- /tile header -->
                                     <!-- 搜索添加 -->
-                                    <div class="filter-container">
+                                    <div class="filter-container" style="padding: 0 5px;">
                                         <el-input @keyup.enter.native="handleFilter" style="width:200px; color: rgba(255, 255, 255, 0.6) !important;border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;" class="filter-item" placeholder="姓名" v-model="searchQuery">
                                         </el-input>
-                                        <el-button class="filter-item btn-green btn-xs" style="float:right;" type="primary" icon="el-icon-edit">新增用户</el-button>
+                                        <el-button class="filter-item" size="small" style="float:right;" type="success" icon="el-icon-plus">新增</el-button>
                                     </div>
 
                                     <!--<div id="inlineEditDataTable_wrapper" class="dataTables_wrapper form-inline" role="grid">
@@ -140,8 +140,7 @@
                                         </div>
 
                                     </div>-->
-                                    <el-table :key='tableKey' :data="listA" v-loading="listLoading" element-loading-text="给我一点时间" border fit
-                                              highlight-current-row
+                                    <el-table :key='tableKey' :data="listA" v-loading="listLoading" element-loading-text="给我一点时间" fit
                                               style="width: 100%">
 
                                         <el-table-column label="用户名" min-width="100">
@@ -166,7 +165,9 @@
                                         </el-table-column>
                                         <el-table-column label="操作" width="140" class-name="small-padding fixed-width" align="center">
                                             <template slot-scope="scope">
-                                                <el-dropdown trigger="click">
+                                                <el-button type="primary" size="mini" icon="el-icon-edit" circle> </el-button>
+                                                <el-button type="danger" size="mini" icon="el-icon-delete" circle> </el-button>
+                                                <!--<el-dropdown trigger="click">
                                                     <span class="el-dropdown-link">
                                                       <el-button type="success" plain>更多操作</el-button>
                                                     </span>
@@ -178,7 +179,7 @@
                                                             <span style="display:inline-block;padding:0 10px;" @click="handleDelete(scope.row)">删除</span>
                                                         </el-dropdown-item>
                                                     </el-dropdown-menu>
-                                                </el-dropdown>
+                                                </el-dropdown>-->
                                             </template>
                                         </el-table-column>
 
@@ -192,7 +193,6 @@
                                             :page-size="listQuery.size"
                                             layout="total, sizes, prev, pager, next, jumper"
                                             :total="this.total"
-                                            background
                                             style="text-align: center;margin-top:20px"
                                     >
                                     </el-pagination>
