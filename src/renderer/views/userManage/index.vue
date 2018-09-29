@@ -42,7 +42,7 @@
 
                                     <!-- tile header -->
                                     <div class="tile-header transparent">
-                                        <h1><strong>Inline Editing</strong> Datatable</h1>
+                                        <h1><strong>用户信息</strong> 一览表</h1>
                                         <div class="controls">
                                             <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
                                             <a href="#" class="remove"><i class="fa fa-times"></i></a>
