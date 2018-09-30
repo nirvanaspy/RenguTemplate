@@ -151,4 +151,25 @@ div.el-dialog {
   }
 }
 
+div.el-pagination {
+  height: 40px;
+  line-height: 40px;
+  input {
+    min-height: 28px!important;
+    line-height: 28px!important;
+  }
+  div.el-input.el-pagination__editor.is-in-pagination{
+    line-height: 28px!important;
+  }
+  .btn-prev, .btn-next {
+    background: rgba(0,0,0,0.3);
+  }
+  li.number.active {
+    background: rgba(0,0,0,0.3);
+  }
+  .el-pagination__total, .el-pagination__jump {
+    color: #fff;
+  }
+}
+
 
