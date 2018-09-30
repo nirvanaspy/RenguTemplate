@@ -82,6 +82,7 @@ tr.el-table__row{
   background-color: rgba(0,0,0,0.3) !important;
 }
 
+
 .filter-item {
   input.el-input__inner{
     background: none !important;
@@ -89,3 +90,58 @@ tr.el-table__row{
     min-height: 28px;
   }
 }
+
+.el-table__expanded-cell{
+  background: rgba(0,0,0,0);
+}
+table.el-table__body tr {
+  background-color: rgba(0,0,0,0);
+}
+
+div.el-dialog {
+  /*background-color: rgba(180,180,180,0.8);
+  color:#fff;
+  .el-input{
+    color: #fff;
+  }*/
+  div.el-dialog__header{
+    background: #333;
+    // background: rgba(0,0,0,0.8);
+  }
+  .el-dialog__title{
+    color:#fff;
+  }
+  div.el-dialog__body{
+    padding: 30px 20px 0;
+  }
+  /*input.el-input__inner{
+    background: rgba(200,200,200,0.7);
+    border: 1px solid #999
+  }*/
+  /*label.el-form-item__label{
+    color: #fff;
+  }*/
+}
+.el-dialog {
+  .el-table__header th, .el-table__header tr {
+    color: #777;
+  }
+  tr.el-table__row{
+    color: #777;
+  }
+}
+
+.selectMemberDialog {
+  .el-dialog{
+    width: 600px !important;
+    .el-dialog__body {
+      text-align: center;
+      padding-bottom: 20px !important;
+    }
+    .el-transfer-panel__footer {
+      display: none;
+    }
+  }
+}
+
+
