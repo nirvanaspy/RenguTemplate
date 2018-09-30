@@ -41,7 +41,7 @@
 
 
                                     <!-- tile header -->
-                                    <div class="tile-header transparent">
+                                    <div class="tile-header transparent" style="padding: 15px 10px;">
                                         <!--<h1><strong>信息</strong> 一览表</h1>-->
                                         <!--<div class="controls">
                                             <a href="#" class="refresh" @click="getList"><i class="fa fa-refresh"></i></a>
@@ -49,7 +49,7 @@
                                         </div>-->
                                         <!-- 搜索添加 -->
                                         <div class="filter-container" style="height: 40px;">
-                                            <el-input @keyup.enter.native="handleFilter" style="width:200px; color: rgba(255, 255, 255, 0.6) !important;border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;" class="filter-item" placeholder="名称" v-model="searchQuery">
+                                            <el-input @keyup.enter.native="handleFilter" style="width:200px; color: rgba(255, 255, 255, 0.6) !important;border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;" class="filter-item" suffix-icon="el-icon-search" placeholder="名称" v-model="searchQuery">
                                             </el-input>
                                             <el-button class="filter-item" size="medium" style="float:right;padding: 5px 9px;margin-top: 7px;" type="success" icon="el-icon-plus" @click="handleCreate">新增</el-button>
                                         </div>
@@ -152,6 +152,12 @@
                                         <el-table-column min-width="200px" label="描述">
                                             <template slot-scope="scope">
                                                 <span>{{scope.row.description}}</span>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column width="150px" label="执行者">
+                                            <template slot-scope="scope">
+                                                <span v-if="scope.row.holder === null">--</span>
+                                                <span v-else>{{scope.row.holder.name}}</span>
                                             </template>
                                         </el-table-column>
                                         <el-table-column width="150px" label="创建时间">
