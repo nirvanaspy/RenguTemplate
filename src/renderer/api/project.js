@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 /*eslint-disable*/
-export function UserList(listQuery) {
+export function projectList(listQuery) {
     return request({
-        url: '/users',
+        url: '/projects',
         method: 'get',
         params: {
             size: listQuery.size,
@@ -11,25 +11,25 @@ export function UserList(listQuery) {
     })
 }
 
-export function createUser(data) {
+export function createProject(data) {
     return request({
-        url: '/users',
+        url: '/projects',
         method: 'post',
         data
     })
 }
 
-export function updateUser(data, id) {
+export function updateProject(data, id) {
     return request({
-        url: '/users/' + id,
+        url: '/projects/' + id,
         method: 'patch',
         data
     })
 }
 
-export function deleteUser(id) {
+export function deleteProject(id) {
     return request({
-        url: '/users/' + id,
+        url: '/projects/' + id,
         method: 'delete'
     })
 }

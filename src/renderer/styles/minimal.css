@@ -1092,8 +1092,8 @@ body #content .tile {
       display: inline-block;
       position: absolute;
       right: 5px;
-      top: 5px;
-      font-size: 11px;
+      top: 10px;
+      font-size: 20px;
       z-index: 99; }
       body #content .tile .tile-header .controls a {
         padding: 3px;

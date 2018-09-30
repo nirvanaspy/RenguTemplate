@@ -81,6 +81,16 @@ tr.el-table__row{
 .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: rgba(0,0,0,0.3) !important;
 }
+
+
+.filter-item {
+  input.el-input__inner{
+    background: none !important;
+    border: 0;
+    min-height: 28px;
+  }
+}
+
 .el-table__expanded-cell{
   background: rgba(0,0,0,0);
 }
@@ -133,4 +143,5 @@ div.el-dialog {
     }
   }
 }
+
 

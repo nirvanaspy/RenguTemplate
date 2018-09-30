@@ -14,7 +14,7 @@
                     <div class="pageheader">
 
 
-                        <h2><i class="fa fa-user" style="line-height: 48px;padding-left: 0;"></i> 用户管理
+                        <h2><i class="fa fa-user" style="line-height: 48px;padding-left: 0;"></i> 项目管理
                         </h2>
 
 
@@ -22,7 +22,7 @@
                             <ol class="breadcrumb">
                                 <li>您当前所在位置</li>
                                 <li><a href="index.html">仁谷</a></li>
-                                <li class="active">用户管理</li>
+                                <li class="active">项目管理</li>
                             </ol>
                         </div>
 
@@ -42,19 +42,20 @@
 
                                     <!-- tile header -->
                                     <div class="tile-header transparent">
-                                        <h1><strong>用户信息</strong> 一览表</h1>
-                                        <div class="controls">
+                                        <!--<h1><strong>信息</strong> 一览表</h1>-->
+                                        <!--<div class="controls">
                                             <a href="#" class="refresh" @click="getList"><i class="fa fa-refresh"></i></a>
-                                            <!--<a href="#" class="remove"><i class="fa fa-times"></i></a>-->
+                                            &lt;!&ndash;<a href="#" class="remove"><i class="fa fa-times"></i></a>&ndash;&gt;
+                                        </div>-->
+                                        <!-- 搜索添加 -->
+                                        <div class="filter-container" style="height: 40px;">
+                                            <el-input @keyup.enter.native="handleFilter" style="width:200px; color: rgba(255, 255, 255, 0.6) !important;border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;" class="filter-item" placeholder="名称" v-model="searchQuery">
+                                            </el-input>
+                                            <el-button class="filter-item" size="medium" style="float:right;padding: 5px 9px;margin-top: 7px;" type="success" icon="el-icon-plus" @click="handleCreate">新增</el-button>
                                         </div>
                                     </div>
                                     <!-- /tile header -->
-                                    <!-- 搜索添加 -->
-                                    <div class="filter-container" style="padding: 0 5px;">
-                                        <el-input @keyup.enter.native="handleFilter" style="width:200px; color: rgba(255, 255, 255, 0.6) !important;border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;" class="filter-item" placeholder="姓名" v-model="searchQuery">
-                                        </el-input>
-                                        <el-button class="filter-item" size="small" style="float:right;" type="success" icon="el-icon-plus" @click="handleCreate">新增</el-button>
-                                    </div>
+
 
                                     <!--<div id="inlineEditDataTable_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                         <div class="row">
@@ -143,24 +144,19 @@
                                     <el-table :key='tableKey' :data="listA" v-loading="listLoading" element-loading-text="给我一点时间" fit
                                               style="width: 100%">
 
-                                        <el-table-column label="用户名" min-width="100">
-                                            <template slot-scope="scope">
-                                                <span>{{scope.row.username}}</span>
-                                            </template>
-                                        </el-table-column>
-                                        <el-table-column width="150px" label="姓名">
+                                        <el-table-column label="名称" width="200px">
                                             <template slot-scope="scope">
                                                 <span>{{scope.row.name}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column min-width="100px" label="联系方式">
+                                        <el-table-column min-width="200px" label="描述">
                                             <template slot-scope="scope">
-                                                <span>{{scope.row.telephoneNumber}}</span>
+                                                <span>{{scope.row.description}}</span>
                                             </template>
                                         </el-table-column>
-                                        <el-table-column min-width="100px" label="邮箱">
+                                        <el-table-column width="150px" label="创建时间">
                                             <template slot-scope="scope">
-                                                <span>{{scope.row.emailAddress}}</span>
+                                                <span>{{scope.row.createTime}}</span>
                                             </template>
                                         </el-table-column>
                                         <el-table-column label="操作" width="140" class-name="small-padding fixed-width" align="center">
@@ -199,17 +195,11 @@
 
                                     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="40%">
                                         <el-form ref="dataForm" :model="temp" label-width="100px" style='width: 80%; margin:0 auto;'>
-                                            <el-form-item label="用户名" prop="username">
-                                                <el-input v-model="temp.username"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="姓名" prop="name">
+                                            <el-form-item label="名称" prop="name">
                                                 <el-input v-model="temp.name"></el-input>
                                             </el-form-item>
-                                            <el-form-item label="联系方式" prop="telephoneNumber">
-                                                <el-input v-model="temp.telephoneNumber"></el-input>
-                                            </el-form-item>
-                                            <el-form-item label="邮箱" prop="emailAddress">
-                                                <el-input v-model="temp.emailAddress"></el-input>
+                                            <el-form-item label="描述" prop="description">
+                                                <el-input v-model="temp.description"></el-input>
                                             </el-form-item>
                                         </el-form>
                                         <div slot="footer" class="dialog-footer">
@@ -245,10 +235,10 @@
 </template>
 
 <script>
-    import { UserList, createUser, updateUser, deleteUser } from '@/api/user'
+    import { projectList, createProject, updateProject, deleteProject } from '@/api/project'
     /*eslint-disable*/
     export default {
-        name: 'userManage',
+        name: 'projectManage',
         data() {
             return {
                 tableKey: 0,
@@ -267,9 +257,7 @@
                 temp: {
                     id: '',
                     name: '',
-                    username: '',
-                    telephoneNumber: '',
-                    emailAddress: ''
+                    description: ''
                 },
                 dialogStatus: '',
                 textMap: {
@@ -325,7 +313,7 @@
         methods: {
             getList() {
                 this.listLoading = true
-                UserList(this.listQuery).then(response => {
+                projectList(this.listQuery).then(response => {
                     this.list = response.data.data.content
                     this.total = response.data.data.totalElements
                     this.listLoading = false
@@ -349,9 +337,7 @@
             resetTemp() {
                 this.temp = {
                     name: '',
-                    username: '',
-                    telephoneNumber: '',
-                    emailAddress: ''
+                    description: ''
                 }
             },
             handleCreate() {
@@ -368,13 +354,10 @@
                         this.creDepLoading = true
                         let formData = new FormData();
 
-                        formData.append('username', this.temp.username);
-                        formData.append('password', '123456');
                         formData.append('name', this.temp.name);
-                        formData.append('telephoneNumber', this.temp.telephoneNumber);
-                        formData.append('emailAddress', this.temp.emailAddress);
+                        formData.append('description', this.temp.description);
 
-                        createUser(formData).then(() => {
+                        createProject(formData).then(() => {
                             this.list.unshift(this.temp)
                             this.creDepLoading = false
                             this.dialogFormVisible = false
@@ -419,16 +402,14 @@
                     this.upDepLoading = true
                     if (valid) {
                         let data = {
-                            'username': this.temp.username,
                             'name': this.temp.name,
-                            'telephoneNumber': this.temp.telephoneNumber,
-                            'emailAddress': this.temp.emailAddress
+                            'description': this.temp.description
                         };
 
                         const id = this.selectedId;
 
                         let userData = qs.stringify(data);
-                        updateUser(userData, id).then(() => {
+                        updateProject(userData, id).then(() => {
                             this.upDepLoading = false
                             this.dialogFormVisible = false
                             this.$notify({
@@ -462,7 +443,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    deleteUser(id).then(() => {
+                    deleteProject(id).then(() => {
                         this.$notify({
                             title: '成功',
                             message: '删除成功',
@@ -526,7 +507,7 @@
             listA: function () {
                 let self = this;
                 return self.list.filter(function (item) {
-                    return item.username.toLowerCase().indexOf(self.searchQuery.toLowerCase()) !== -1;
+                    return item.name.toLowerCase().indexOf(self.searchQuery.toLowerCase()) !== -1;
                 })
             }
         },
