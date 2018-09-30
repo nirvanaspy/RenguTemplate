@@ -335,9 +335,9 @@
                             </router-link>
                         </li>
                         <li>
-                            <a href="#">
+                            <router-link to="/projectManage/index">
                                 <i class="fa fa-product-hunt"></i> 项目管理
-                            </a>
+                            </router-link>
                         </li>
                         <li>
                             <a href="#">

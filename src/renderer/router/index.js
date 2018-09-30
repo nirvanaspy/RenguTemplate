@@ -82,6 +82,16 @@ export const constantRouterMap = [
             meta: {title: 'usermanage'}
         }]
     },
+    {
+        path: '/projectmanage',
+        component: Layout,
+        children: [{
+            path: 'index',
+            component: () => import('@/views/projectManage/index'),
+            name: 'projectmanage',
+            meta: {title: 'projectmanage'}
+        }]
+    },
 
 
   {
