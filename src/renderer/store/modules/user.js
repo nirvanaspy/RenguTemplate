@@ -8,7 +8,8 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
-    roles: []
+    roles: [],
+    userId: ''
   },
 
   mutations: {
@@ -23,6 +24,9 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_USERID: (state, userId) => {
+      state.userId = userId
     }
   },
 
@@ -71,12 +75,14 @@ const user = {
         const data = state.token
         // const refreshToken = state.refreshToken
         const decodeToken = jwt.decode(data)
+        console.log(decodeToken)
         // const decodeRefreshToken = jwt.decode(refreshToken)
         // const dateNow = (new Date())/1000
         // console.log(dateNow)
         // const rolesset = data.username === 'admin' ? 'admin' : 'editor'
         const rolesset = decodeToken.authorities.length > 1 ? 'admin' : 'editor'
         commit('SET_ROLES', rolesset)
+        commit('SET_USERID', decodeToken.userId)
         resolve()
       })
     },
