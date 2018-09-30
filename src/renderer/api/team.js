@@ -49,17 +49,21 @@ export function updateTeam(id, data) {
   })
 }
 
-export function addMembers(id, ids) {
+export function addMembers(id, data) {
   return request({
     url: '/teams/' + id + '/add-members',
     method: 'patch',
-    ids
+    /*headers: {
+        'content-type': 'application/x-www-form-urlencoded'
+    },*/
+    data
   })
 }
 
-export function removeMembers(id) {
+export function removeMembers(id, data) {
   return request({
-    url: '/teams/' + id + '/remove-memebers',
-    method: 'delete'
+    url: '/teams/' + id + '/remove-members',
+    method: 'delete',
+    data
   })
 }

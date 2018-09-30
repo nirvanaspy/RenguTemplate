@@ -98,7 +98,7 @@
                                                     </el-dropdown-item>
                                                     <el-dropdown-item divided>
                                                         <span style="display:inline-block;padding:0 10px;"
-                                                              @click="handleAddMember(scope.row)">添加组员</span>
+                                                              @click="handleAddMember(scope.row)">管理组员</span>
                                                     </el-dropdown-item>
 
                                                 </el-dropdown-menu>
@@ -209,6 +209,7 @@
                     :titles="['所有成员', '已选成员']"
                     :button-texts="['移出', '加入']"
                     @change="handleChange"
+                    filterable
                     :data="allUserList">
             </el-transfer>
         </el-dialog>
@@ -256,8 +257,9 @@
                     create: '新建项目组'
                 },
                 selectedTeamId: '',
-                bindedUsers: [],
+                bindedUsers: [{label:'a', value:'aaa'}, {label:'b', value:'bbb'}, {label:'c', value:'ccc'}],
                 allUserList: [],
+                copyAllUserList: [],
                 selectUserList: []
             }
         },
@@ -268,19 +270,37 @@
         },
         methods: {
             handleChange(value, direction, movedKeys) {
-                console.log(value, direction, movedKeys)
+                // console.log(value, direction, movedKeys)
+                let Ids = (movedKeys + '').replace(/\[|]/g,'')
+                let data = {
+                    userIds: Ids
+                }
+                let qs = require('qs')
+                let dataBind = qs.stringify(data)
                 // 加入组员
                 if(direction === 'right') {
-                    let addIds = {userIds: movedKeys}
-                    addMembers(this.selectedTeamId, addIds).then(() => {
 
+                    addMembers(this.selectedTeamId, dataBind).then(() => {
+                        this.$notify({
+                            title: '成功',
+                            message: '项目组成员添加成功',
+                            type: 'success',
+                            duration: 2000
+                        })
                     })
                 }
                 // 移除组员
                 if(direction === 'left') {
-                    let removeIds = movedKeys
-                    removeMembers(this.selectedTeamId, removeIds).then(() => {
-
+                    // let removeIds = movedKeys
+                    let formData = new FormData();
+                    formData.append('userIds', Ids);
+                    removeMembers(this.selectedTeamId, formData).then(() => {
+                        this.$notify({
+                            title: '成功',
+                            message: '项目组成员移除成功',
+                            type: 'success',
+                            duration: 2000
+                        })
                     })
                 }
             },
@@ -290,14 +310,23 @@
                     // this.allUserList = res.data.data.content
                     // this.allUserList = res.data.data.content
                     let usrList = res.data.data.content
-                    usrList.forEach((item, index) => {
+                    /*usrList.forEach((item, index) => {
                         this.allUserList.push({
                             key: item.id,
                             label: item.name,
                             userId: item.id,
                             disabled: item.username === 'admin'
                         })
-                    })
+                    })*/
+                    for(let i =0; i < usrList.length; i++) {
+                        this.allUserList.push({
+                            key: usrList[i].id,
+                            label: usrList[i].name,
+                            userId: usrList[i].id,
+                            disabled: usrList[i].username === 'admin'
+                        })
+                    }
+                    this.copyAllUserList = this.allUserList.slice()
                     console.log(this.allUserList)
                 })
             },
@@ -401,6 +430,7 @@
                 })
             },
             handleAddMember(row) {
+                this.allUserList = this.copyAllUserList.slice()
                 this.selectedTeamId = row.id
                 this.addMemberVisible = true
                 this.membersLoading = true
@@ -421,12 +451,26 @@
                     console.log(this.allUserList)
                 })*/
                 getTeamMembers(row.id).then((res) => {
-                    this.bindedUsers = res.data.data
+                    this.bindedUsers = []
+                    res.data.data.forEach((item) => {
+                        /*this.bindedUsers.push({
+                            key: item.id,
+                            label: item.name,
+                            userId: item.id,
+                            disabled: item.username === 'admin'
+                        })*/
+                        this.bindedUsers.push(item.id)
+                    })
+                    // console.log(this.bindedUsers)
                     // 遍历所有组员和该项目组已绑定组员，生成穿梭框左侧可选数据
+                    // console.log(this.allUserList.length)
                     for(let i = 0; i < this.allUserList.length; i++) {
                         for(let j = 0; j < this.bindedUsers.length; j++) {
-                            if(this.allUserList[i].userId === this.bindedUsers[j].id) {
-                                this.allUserList.splice(i,1)
+                            // console.log(this.allUserList[i])
+                            if(this.allUserList[i]) {
+                                if(this.allUserList[i].userId === this.bindedUsers[j].userId) {
+                                    this.allUserList.splice(i,1)
+                                }
                             }
                         }
                     }
